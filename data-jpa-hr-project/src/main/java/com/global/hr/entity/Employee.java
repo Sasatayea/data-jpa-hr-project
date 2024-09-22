@@ -10,11 +10,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedNativeQueries;
+import jakarta.persistence.NamedNativeQuery;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Table(name = "hr_employee")
 @Entity
+@NamedQuery(name = "Employee.findBySalary" ,query = "select emp from Employee emp where emp.salary >= :salary")
 public class Employee {
 
 	@Id
@@ -31,7 +35,7 @@ public class Employee {
 
 	@OneToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
-//	@JsonIgnore
+	@JsonIgnore
 	private User user ;
 	
 	public User getUser() {

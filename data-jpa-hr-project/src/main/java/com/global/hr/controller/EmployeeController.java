@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.global.hr.HRStatisticProjection;
 import com.global.hr.entity.Employee;
 import com.global.hr.entity.EmployeeResponse;
 import com.global.hr.service.EmployeeService;
@@ -43,6 +44,12 @@ public class EmployeeController {
 	public List<Employee> findByName(@PathVariable String name) {
 		
 		return employeeService.findByName(name);
+	}
+	
+	@GetMapping("/salary")
+	public ResponseEntity<?> findBySalary (@RequestParam Double salary){
+		
+		return ResponseEntity.ok( employeeService.findBySalary(salary));
 	}
 	
 	@GetMapping("/emp-dept")
@@ -96,5 +103,10 @@ public class EmployeeController {
 	public List<Employee> findAll() {
 		
 		return employeeService.findAll();
+	}
+	
+	@GetMapping("statistic")
+	public ResponseEntity<?>  getHRStatistic() {
+	    return  ResponseEntity.ok( employeeService.getHRStatistic() ) ;
 	}
 }

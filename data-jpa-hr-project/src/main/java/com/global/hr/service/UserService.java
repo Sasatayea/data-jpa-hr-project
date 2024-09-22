@@ -5,14 +5,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.global.hr.entity.Role;
 import com.global.hr.entity.User;
 import com.global.hr.repository.UserRepo;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class UserService {
 
 	@Autowired
 	private UserRepo userRepo ;
+	
+	@Autowired
+	private RoleService roleService ;
 	
 	public User findById(Long id) {
 		
@@ -43,4 +49,17 @@ public class UserService {
 		
 		userRepo.deleteById(id);
 	}
+	
+	@Transactional
+	public void addRoleForAllUsers(String roleName) {
+		
+		Role role = roleService.findByName(roleName) ;
+		
+		findAll().forEach(user ->{
+			user.addRole(role);
+			userRepo.save(user);
+		});
+	}
+	
+	
 }

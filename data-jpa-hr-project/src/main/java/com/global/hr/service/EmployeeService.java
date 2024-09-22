@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.global.hr.HRStatisticProjection;
 import com.global.hr.entity.Employee;
 import com.global.hr.repository.EmployeeRepo;
 
@@ -23,6 +24,11 @@ public class EmployeeService {
 	public Employee findById(Long id) {
 		
 		return employeeRepo.findById(id).orElseThrow();
+	}
+	
+	public List<Employee> findBySalary (Double salary){
+		
+		return employeeRepo.findBySalary(salary);
 	}
 	
 	public List<Employee> findByName(String name) {
@@ -72,7 +78,7 @@ public class EmployeeService {
 	
 	public List<Employee> findByDepartmentId(Long id) {
 		
-		return employeeRepo.findByDepartmentId(id);
+		return employeeRepo.findByDepartment(id);
 	}
 	
 	
@@ -84,5 +90,9 @@ public class EmployeeService {
 	public void deleteById(Long id) {
 		
 		employeeRepo.deleteById(id);
+	}
+	
+	public HRStatisticProjection  getHRStatistic() {
+	    return employeeRepo.getHRStatistic() ;
 	}
 }
